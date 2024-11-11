@@ -1,6 +1,5 @@
 from node_single import Node
 from typing import Optional
-from errors import ValueNotFoundError
 
 class LinkedList:
     def __init__(self):
@@ -39,9 +38,32 @@ class LinkedList:
             print("List is empty.")
             return None
         cur_node = self.head
-        while (cur_node):
+        while cur_node:
             if cur_node.value == value:
                 return cur_node
             cur_node = cur_node.next
         print(f"Value {value} not found.")
         return None
+
+    def insert(self, value: int, index: int):
+        if self.is_empty():
+            print("List is empty")
+            return
+        if index < 0 and index + self.size < 0 or index > self.size - 1:
+            raise IndexError(f"Index {index} out of bounds.")
+        if index < 0:
+            index += self.size
+
+        node = Node(value, None)
+        if index == 0:
+            node.next = self.head
+            self.head = node
+        else:
+            cur_node = self.head
+            next_node = cur_node.next
+            while (index != 0):
+                index -= 1
+                cur_node = cur_node.next
+                next_node = next_node.next
+            cur_node.next = node
+            node.next = next_node
