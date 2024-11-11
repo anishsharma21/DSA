@@ -63,7 +63,38 @@ class LinkedList:
             next_node = cur_node.next
             while (index != 0):
                 index -= 1
-                cur_node = cur_node.next
+                cur_node = next_node
                 next_node = next_node.next
             cur_node.next = node
             node.next = next_node
+        self.size += 1
+
+    def delete(self, value: int):
+        if self.is_empty():
+            print("List is empty")
+            return
+        cur_node = self.head
+        if cur_node.value == value:
+            removed_node = self.head
+            self.head = self.head.next
+            return removed_node
+        next_node = cur_node.next
+        while (next_node):
+            if next_node.value == value:
+                cur_node.next = next_node.next
+                return next_node
+            cur_node = next_node
+            next_node = next_node.next
+        print("Value not found")
+
+    def traverse(self):
+        if self.is_empty():
+            print("[None]")
+            return
+        cur_node = self.head
+        while (cur_node):
+            if not cur_node.next:
+                print(f"{cur_node.value}")
+                return
+            print(f"{cur_node.value} -> ", end="")
+            cur_node = cur_node.next
